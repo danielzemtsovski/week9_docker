@@ -9,6 +9,8 @@ from typing import Optional, Dict
 app = FastAPI()
 
 DB_PATH = Path("db/shopping_list.json")
+DB_PATH1 = Path("data/backup_shopping_list.json")
+
 
 class Item(BaseModel):
     id:int
@@ -26,7 +28,9 @@ def load_database():
     with open(DB_PATH, "r") as f:
         return json.load(f)
 
-
+def load_database1():
+    with open(DB_PATH1, "r") as f:
+        return json.load(f)
 
 @app.get("/items")
 def to_list():
@@ -40,7 +44,15 @@ def add(item: Item):
             "name":
             "quantity":
             }
-    
+
+@app.get("/backup")   
+def to_list1():
+    return load_database1()
+
+@app.post("/backup/save")
+    return
+
 
 if __name__ == "__main__":
+    check_database_exists()
     uvicorn.run(app, host="0.0.0.0", port=8000)
